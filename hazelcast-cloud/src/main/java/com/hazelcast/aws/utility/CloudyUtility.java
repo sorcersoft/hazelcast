@@ -18,8 +18,8 @@ package com.hazelcast.aws.utility;
 
 import com.hazelcast.config.AbstractXmlConfigHelper;
 import com.hazelcast.config.AwsConfig;
-import com.hazelcast.logging.ILogger;
-import com.hazelcast.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -33,13 +33,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 
 import static com.hazelcast.config.AbstractXmlConfigHelper.cleanNodeName;
 import static java.lang.String.format;
 
 public class CloudyUtility {
-    final static ILogger logger = Logger.getLogger(CloudyUtility.class);
+    final static Logger logger = LoggerFactory.getLogger(CloudyUtility.class);
 
     public static String getQueryString(Map<String, String> attributes) {
         StringBuilder query = new StringBuilder();
@@ -77,7 +76,7 @@ public class CloudyUtility {
             }
             return names;
         } catch (Exception e) {
-            logger.warning(e);
+            logger.warn("",e);
         }
         return new ArrayList<String>();
     }
@@ -129,14 +128,14 @@ public class CloudyUtility {
 
                  if (ip != null) {
                     if (!acceptState(state)) {
-                        logger.finest(format("Ignoring EC2 instance [%s][%s] reason: the instance is not running but %s", instanceName, ip, state));
+                        logger.debug(format("Ignoring EC2 instance [%s][%s] reason: the instance is not running but %s", instanceName, ip, state));
                     } else if (!acceptTag(awsConfig, node)) {
-                        logger.finest(format("Ignoring EC2 instance [%s][%s] reason: tag-key/tag-value don't match", instanceName, ip));
+                        logger.debug(format("Ignoring EC2 instance [%s][%s] reason: tag-key/tag-value don't match", instanceName, ip));
                     } else if (!acceptGroupName(awsConfig, node)) {
-                        logger.finest(format("Ignoring EC2 instance [%s][%s] reason: security-group-name doesn't match", instanceName, ip));
+                        logger.debug(format("Ignoring EC2 instance [%s][%s] reason: security-group-name doesn't match", instanceName, ip));
                     } else {
                         list.add(ip);
-                        logger.finest(format("Accepting EC2 instance [%s][%s]",instanceName, ip));
+                        logger.debug(format("Accepting EC2 instance [%s][%s]",instanceName, ip));
                     }
                 }
 
