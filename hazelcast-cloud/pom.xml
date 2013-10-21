@@ -21,7 +21,7 @@
     <parent>
         <groupId>com.sorcersoft.hazelcast</groupId>
         <artifactId>hazelcast-root</artifactId>
-        <version>3.2-SNAPSHOT</version>
+        <version>3.2</version>
     </parent>
 
     <name>hazelcast-cloud</name>
@@ -29,7 +29,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.hazelcast</groupId>
+            <groupId>com.sorcersoft.hazelcast</groupId>
             <artifactId>hazelcast-mini</artifactId>
             <version>${project.version}</version>
         </dependency>
